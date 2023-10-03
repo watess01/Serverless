@@ -1,0 +1,6 @@
+name: ${self:service}-api-${self:provider.stage}
+handler: ./src/functions/gateway/index.handler
+events:
+  - httpApi:
+      path: /gateway/{gateway}
+      method: GET

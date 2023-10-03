@@ -1,0 +1,59 @@
+service: strategic-initiative
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'eu-west-2'}
+
+custom:
+  serverless-offline:
+    port: 3200
+
+  dynamodb:
+    stages:
+      - local
+    start:
+      docker: true
+      port: 8000
+      inMemory: true
+      migrate: true
+      noStart: true
+      seed: true
+
+    seed:
+      domain:
+        sources:
+          - table: ${env:DYNAMODB_TABLE}
+            sources: [./src/mocks/dynamoDb/content_seeder.json]
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+  - serverless-offline-lambda
+  - serverless-webpack
+  - serverless-dynamodb-local
+
+functions:
+  gateway: ${file(./src/functions/gateway/config.yml)}
+  supplier: ${file(./src/functions/supplier/config.yml)}
+
+resources:
+  Resources:
+    ContentDataTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: supplier
+            AttributeType: S
+          - AttributeName: mapping
+            AttributeType: S
+        KeySchema:
+          - AttributeName: supplier
+            KeyType: HASH
+          - AttributeName: mapping
+            KeyType: RANGE
+        TableName: ${env:DYNAMODB_TABLE}
+        BillingMode: PAY_PER_REQUEST
