@@ -1,14 +1,22 @@
 [
   {
-    "supplier": "000000000001",
-    "mapping": "a"
+    "supplier": "BigCorp",
+    "mapping": "{ \"from\": [{ \"name\": \"LINE_ID\", \"value\": \"ABC/123\" }], \"to\": [{ \"name\": \"IDENTIFIER\", \"value\": \"1\" }] }"
   },
   {
-    "supplier": "000000000001",
-    "mapping": "b"
+    "supplier": "LittleGroup",
+    "mapping": "{ \"from\": [{ \"name\": \"LINE_PROFILE\", \"value\": \"1\" }],\"to\": [{ \"name\": \"LINE_PROFILE\", \"value\":  \"ABC/123\" }]},{\"from\": { \"name\": \"LINE_PROFILE\", \"value\": \"2\" }, \"to\": [{ \"name\": \"LINE_PROFILE\", \"value\": \"CDE/123\"}]}"
   },
   {
-    "supplier": "000000000001",
-    "mapping": "c"
+    "supplier": "MegaCorp",
+    "mapping": "{\"from\": [{ \"name\": \"LINE_PROFILE\", \"value\": \"1\" }], \"to\": [{ \"name\": \"PROFILE\", \"value\": \"1AB\" }] }"
+  },
+  {
+    "supplier": "OCP",
+    "mapping": "{ \"from\": [{ \"name\": \"UPSTREAM\", \"value\": \"1\" }], \"to\": [{ \"name\": \"DOWNSTREAM\", \"value\": \"12\" }] }"
+  },
+  {
+    "supplier": "Omni Consumer Products",
+    "mapping": "{\"from\": [{ \"name\": \"LINE_PROFILE\", \"value\":  \"1\" }],\"to\": [{ \"name\": \"UPSTREAM\", \"value\": \"12\" }, { \"name\": \"DOWNSTREAM\", \"value\": \"1000\" }] }"
   }
 ]

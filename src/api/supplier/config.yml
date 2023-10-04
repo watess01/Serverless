@@ -1,5 +1,5 @@
 name: ${self:service}-api-${self:provider.stage}
-handler: ./src/functions/supplier/index.handler
+handler: ./src/api/supplier/index.handler
 events:
   - httpApi:
       path: /supplier/{supplier}

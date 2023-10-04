@@ -4,13 +4,13 @@ useDotenv: true
 
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs18.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'eu-west-2'}
 
 custom:
   serverless-offline:
-    port: 3200
+    port: 3201
 
   dynamodb:
     stages:
@@ -37,8 +37,8 @@ plugins:
   - serverless-dynamodb-local
 
 functions:
-  gateway: ${file(./src/functions/gateway/config.yml)}
-  supplier: ${file(./src/functions/supplier/config.yml)}
+  gateway: ${file(./src/api/gateway/config.yml)}
+  supplier: ${file(./src/api/supplier/config.yml)}
 
 resources:
   Resources:
@@ -53,7 +53,14 @@ resources:
         KeySchema:
           - AttributeName: supplier
             KeyType: HASH
-          - AttributeName: mapping
-            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: index2
+            KeySchema:
+              - AttributeName: supplier
+                KeyType: HASH
+              - AttributeName: mapping
+                KeyType: RANGE
+            Projection:
+              ProjectionType: "ALL"
         TableName: ${env:DYNAMODB_TABLE}
         BillingMode: PAY_PER_REQUEST
